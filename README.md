@@ -80,9 +80,9 @@ root_agent = Agent(
 )
 ```
 
-Now you can modify the agent's properties such as `model`, `name`, `description`, and `instruction` (this is the system prompt) to customize its behavior according to your needs.
+Now you could modify the agent's properties such as `model`, `name`, `description`, and `instruction` (this is the system prompt) to customize its behavior according to your needs.
 
-Change the `instruction` and `description` to make the agent more specialized. For example, you can create an agent that responds in a specific language, style or tone, or one that focuses on a particular domain of knowledge.
+Change the `instruction` and `description` to make the agent more specialized. For example, you can create an agent that responds in a specific language, style and tone, or one that focuses on a particular domain of knowledge.
 
 
 ### Run the agent in the web interface
@@ -100,7 +100,7 @@ uv run adk web
 > Run all `uv` commands from the parent directory that contains your `first_agent` folder. In our case, run `uv run adk web` from the `google-adk-first-agent` directory.
 
 
-2. Open your web browser and navigate to `http://127.0.0.1:8000` to access the application.
+2. Open your web browser and navigate to <http://127.0.0.1:8000> to access the application.
 
 3. You should see the ADK web interface where you can interact with your agent. Type a message in the input box and hit enter to send it to the agent. The agent will process your input and respond accordingly.
 
