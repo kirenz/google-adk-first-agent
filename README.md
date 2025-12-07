@@ -1,4 +1,4 @@
-# Agent Development Kit Setup instructions
+# Google Agent Development Kit (ADK) - First Agent Tutorial
 
 ![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)
 ![uv](https://img.shields.io/badge/uv-managed-430f8e.svg?style=flat&logo=python&logoColor=white)
@@ -7,7 +7,16 @@
 Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/) is a flexible and modular framework for developing and deploying AI agents. While optimized for Gemini and the Google ecosystem, ADK is model-agnostic, deployment-agnostic, and is built for compatibility with other frameworks. 
 
 
-This guide shows you how to get up and running with your first agent in **Agent Development Kit (ADK)** for Python. ADK needs Python 3.10 or higher.
+This guide shows you how to get up and running with your first agent in **Agent Development Kit (ADK)** for Python. This project uses Python 3.12 (ADK requires Python 3.10 or higher).
+
+## What You'll Learn
+
+In this tutorial, you will:
+- Set up your development environment for Google ADK
+- Create and configure your first AI agent
+- Understand the basic structure of an ADK agent project
+- Interact with your agent using the ADK web interface
+- Learn how to customize agent behavior through prompts and properties
 
 
 ## Prerequisites
@@ -48,7 +57,7 @@ uv sync
 
 4. Open the project in your preferred code editor (e.g., VSCode).
 
-5. Go to the `first_agent` directory and rename the `example.env` file to `.env` 
+5. Go to the `first_agent` directory and rename the `.example.env` file to `.env` 
 
 6. Open the `.env` file and add your Google API key. Save the file.
 
@@ -63,7 +72,7 @@ The project folder `first_agent` has the following structure, with the `agent.py
 first_agent/
     agent.py      # main agent code
     .env          # API keys
-    __init__.py.  # package initialization
+    __init__.py   # package initialization
 ```
 
 ### Modify the agent properties
@@ -108,3 +117,27 @@ uv run adk web
 4. Explore the options at the top left to manage and test your agent like *Events*, *Tracing*, *Artifacts*, *Evaluations* and an *Agent builder assistant*.
 
 5. To stop the application, go back to your terminal and press `Ctrl + C`.
+
+
+
+## Troubleshooting
+
+### API Key Issues
+- **Error: "API key not valid"**: Make sure you copied the full API key from Google AI Studio without any extra spaces
+- **Error: "GOOGLE_API_KEY not found"**: Verify that your `.env` file is in the `first_agent` directory and is named exactly `.env` (not `.example.env`)
+
+### Port Already in Use
+- **Error: "Address already in use"**: Port 8000 is already occupied. Either:
+  - Stop the other application using port 8000, or
+  - Use a different port: `uv run adk web --port 8001`
+
+### UV Command Not Found
+- **Error: "uv: command not found"**: Make sure uv is installed. Follow the [uv installation guide](https://github.com/kirenz/uv-setup)
+- After installation, you may need to restart your terminal
+
+### Dependencies Issues
+- If you encounter dependency errors, try removing the lock file and reinstalling:
+  ```bash
+  rm uv.lock
+  uv sync
+  ```
