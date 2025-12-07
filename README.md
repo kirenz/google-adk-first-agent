@@ -47,10 +47,9 @@ uv sync
 
 4. Open the project in your preferred code editor (e.g., VSCode).
 
-5. Rename the `example.env` file in the `first_agent` directory of the project to `.env` 
+5. Go to the `first_agent` directory and rename the `example.env` file to `.env` 
 
 6. Open the `.env` file and add your Google API key. Save the file.
-
 
 
 ## Explore the agent project
