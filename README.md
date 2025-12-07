@@ -1,6 +1,7 @@
 # Agent Development Kit Setup instructions
 
 ![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)
+![uv](https://img.shields.io/badge/uv-managed-430f8e.svg?style=flat&logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/) is a flexible and modular framework for developing and deploying AI agents. While optimized for Gemini and the Google ecosystem, ADK is model-agnostic, deployment-agnostic, and is built for compatibility with other frameworks. 
