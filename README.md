@@ -125,11 +125,13 @@ def get_current_time() -> dict:
     return {"status": "success", "time": current_time}
 ```
 
-Tools are Python functions that the agent can call to perform specific tasks. The agent automatically:
+Tools can be Python functions that the agent can call to perform specific tasks. The agent automatically:
 1. Recognizes when to use the tool based on user intent
 2. Calls the function
 3. Receives the result
 4. Formulates a natural language response
+
+The ADK also supports more complex tools, including those that interact with external APIs or services. There are also [built-in tools](https://google.github.io/adk-docs/tools/built-in-tools/) available in the ADK framework.
 
 ### Understanding the Agent-Tool Architecture
 
