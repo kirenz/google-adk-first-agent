@@ -15,6 +15,7 @@ In this tutorial, you will:
 - Set up your development environment for Google ADK
 - Create and configure your first AI agent
 - Understand the basic structure of an ADK agent project
+- Learn how to implement and use tools in your agent
 - Interact with your agent using the ADK web interface
 - Learn how to customize agent behavior through prompts and properties
 
@@ -71,28 +72,107 @@ The project folder `first_agent` has the following structure, with the `agent.py
 ```bash
 first_agent/
     agent.py      # main agent code
+    tools.py      # custom tool definitions
     .env          # API keys
     __init__.py   # package initialization
 ```
 
-### Modify the agent properties
+### Understand the agent code
 
-Open the `agent.py` file. It contains a `root_agent` definition which is the only required element of an ADK agent. This means you always need to have at least one agent defined as `root_agent`.
+Open the [agent.py](first_agent/agent.py) file. It contains a `root_agent` definition which is the only required element of an ADK agent. This means you always need to have at least one agent defined as `root_agent`.
 
 ```python
 from google.adk.agents.llm_agent import Agent
+from first_agent.tools import get_current_time
+
 
 root_agent = Agent(
     model='gemini-2.5-flash',
     name='root_agent',
-    description='A helpful assistant for user questions.',
-    instruction='Answer user questions to the best of your knowledge',
+    description="A helpful assistant that can tell the current time.",
+    instruction="""
+    You are a helpful assistant.
+    When the user asks for the time, use the 'get_current_time' tool.
+    You yourself do NOT know what time it is - you MUST use the tool!
+    Respond in the same language as the user's question.
+    Be friendly and precise in your response.
+    """,
+    tools=[get_current_time],
 )
 ```
 
-Now you could modify the agent's properties such as `model`, `name`, `description`, and `instruction` (this is the system prompt) to customize its behavior according to your needs.
+This example demonstrates an agent with **tool use** capabilities. The agent:
+- Has access to a custom `get_current_time` tool defined in [tools.py](first_agent/tools.py)
+- Is instructed to use the tool when users ask about the current time
+- Can respond in multiple languages based on the user's question
 
-Change the `instruction` and `description` to make the agent more specialized. For example, you can create an agent that responds in a specific language, style and tone, or one that focuses on a particular domain of knowledge.
+### Understand the tool implementation
+
+The [tools.py](first_agent/tools.py) file contains the `get_current_time` function:
+
+```python
+import datetime
+
+
+def get_current_time() -> dict:
+    """
+    Returns the current time.
+
+    Returns:
+        Dictionary with status and current time
+    """
+    current_time = datetime.datetime.now().strftime("%H:%M")
+    return {"status": "success", "time": current_time}
+```
+
+Tools are Python functions that the agent can call to perform specific tasks. The agent automatically:
+1. Recognizes when to use the tool based on user intent
+2. Calls the function
+3. Receives the result
+4. Formulates a natural language response
+
+### Understanding the Agent-Tool Architecture
+
+```mermaid
+graph TB
+    A[User Request] --> B[Root Agent]
+    B --> C{Need Tool?}
+    C -->|Yes| D[get_current_time Tool]
+    D -->|time data| B
+    C -->|No| E[Direct Response]
+    B --> F[ADK Web Interface]
+    E --> F
+
+    style A fill:#e1f5ff
+    style B fill:#ffe1e1
+    style C fill:#fff4e1
+    style D fill:#e1ffe1
+    style E fill:#ffe1f5
+    style F fill:#f0f0f0
+
+    subgraph "Agent with Tool Use"
+        B
+        C
+        D
+        E
+    end
+```
+
+This diagram shows how the agent processes requests:
+- The **Root Agent** receives user requests
+- It decides whether a tool is needed based on the user's question
+- If needed, it calls the **get_current_time** tool and receives the data
+- The agent then formulates a natural language response
+- The response is displayed in the **ADK Web Interface**
+
+### Customize the agent
+
+You can modify the agent's properties such as `model`, `name`, `description`, and `instruction` (system prompt) to customize its behavior. You can also create additional tools to extend the agent's capabilities.
+
+For example, you could:
+- Change the `instruction` to make the agent respond in a specific style or tone
+- Add more tools for different functionalities (weather, calculations, etc.)
+- Modify the `description` to reflect the agent's specialized capabilities
 
 
 ### Run the agent in the web interface
