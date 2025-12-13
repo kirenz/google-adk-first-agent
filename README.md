@@ -111,18 +111,30 @@ This example demonstrates an agent with **tool use** capabilities. The agent:
 The [tools.py](first_agent/tools.py) file contains the `get_current_time` function:
 
 ```python
-import datetime
-
+from datetime import datetime
 
 def get_current_time() -> dict:
     """
-    Returns the current time.
-
+    Retrieves the current system time in 24-hour format.
+    
+    Use this tool when the user asks for the current time 
+    or wants to know what time it is now.
+    
     Returns:
-        Dictionary with status and current time
+        dict: A dictionary containing the current time (e.g., {'current_time': '14:30'})
     """
-    current_time = datetime.datetime.now().strftime("%H:%M")
-    return {"status": "success", "time": current_time}
+    # 1. Get current time
+    now = datetime.now()
+    
+    # 2. Format the time 
+    # %H = hour (00-23), %M = minute (00-59)
+    time_str = now.strftime("%H:%M")
+    
+    # 3. Return as dictionary
+    # The agent receives this structured data to formulate its natural language response
+    return {
+        "current_time": time_str
+    }
 ```
 
 Tools can be Python functions that the agent can call to perform specific tasks. The agent automatically:
